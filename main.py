@@ -61,11 +61,11 @@ class MyWindow(QWidget):
 
     def show_camera(self):
         flag, self.image = self.cap.read()  # 从视频流中读取
-
         # 把读到的帧的大小重新设置为 400 x 400
         # print(self.image.shape) # (720, 1280, 3)
-        print(self.image)
-        show_before = cv2.resize(self.image, (400, 400))
+        # print(self.image)
+        # 保存self.image
+        show_before = cv2.resize(self.image, (400, int(720 * 400 / 1280))) # 先宽后高
         show_before = cv2.cvtColor(
             show_before, cv2.COLOR_BGR2RGB)  # 视频色彩转换回RGB，这样才是现实的颜色
         showImage_before = QImage(show_before.data, show_before.shape[1], show_before.shape[0],
@@ -73,8 +73,8 @@ class MyWindow(QWidget):
         
         show_after = detect(self.image)
         # print(show_after.shape)  # (720, 1280, 3)
-        print(show_after) 
-        show_after = cv2.resize(show_after, (400, 400))
+        # print(show_after) 
+        show_after = cv2.resize(show_after, (400, int(720 * 400 / 1280)))
         show_after = cv2.cvtColor(
             show_after, cv2.COLOR_BGR2RGB)  # 视频色彩转换回RGB，这样才是现实的颜色
         showImage_after = QImage(show_after.data, show_after.shape[1], show_after.shape[0],
